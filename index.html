@@ -1467,15 +1467,22 @@ function gerarHash() {
 function vote(musica) {
   fetch(API_URL, {
     method: "POST",
-    mode: "no-cors",
+    headers: {
+      "Content-Type": "application/json"
+    },
     body: JSON.stringify({
       musica: musica,
       hash: gerarHash()
     })
+  })
+  .then(() => {
+    mostrarToast();
+  })
+  .catch(() => {
+    alert("Erro ao registrar voto");
   });
-
-   mostrarToast(); // 👈 no lugar do alert
 }
+
 
 function mostrarToast() {
   const toast = document.getElementById("toast");
