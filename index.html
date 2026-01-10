@@ -1453,7 +1453,7 @@
 </footer>
 
 <script>
-const API_URL = "https://script.google.com/macros/s/AKfycbxmEkNq-TRXfzOb6v7s65zCBzH2OM6yDm-rKyl1RhNKy1ohBv9aDI578RtjVltUUwAB/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbwP3wURQpOaEoS88DUBTFMlD9n4F54cJgzvqOkNHWW6WzQOGDWHwHfHNR_k-yx4Xcxd/exec";
 
 function gerarHash() {
   let hash = localStorage.getItem("voteHash");
@@ -1482,8 +1482,7 @@ async function vote(musica) {
     console.error("Erro na localização:", error);
   }
 
-  // Criamos um formulário virtual para enviar os dados
-  // Isso é MUITO mais estável para o Google Apps Script em modo no-cors
+  // Prepara os dados para o formato que o Apps Script lê melhor
   const formData = new URLSearchParams();
   formData.append('musica', musica);
   formData.append('hash', gerarHash());
@@ -1491,6 +1490,7 @@ async function vote(musica) {
   formData.append('cidade', cidade);
   formData.append('pais', pais);
 
+  // Envia os dados
   fetch(API_URL, {
     method: "POST",
     mode: "no-cors",
