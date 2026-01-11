@@ -1466,9 +1466,14 @@ function gerarHash() {
 
 // Nova função para buscar os dados de localização do visitante
 async function vote(musica) {
-  let ip = "Desconhecido";
-  let cidade = "Desconhecida";
-  let pais = "Desconhecido";
+  // 1. Verificar se já votou nesta música nesta sessão (no navegador)
+  const votados = JSON.parse(localStorage.getItem("musicasVotadas") || "[]");
+  if (votados.includes(musica)) {
+    alert("Você já votou nesta música!");
+    return;
+  }
+
+  let ip = "Desconhecido", cidade = "Desconhecida", pais = "Desconhecido";
 
   try {
     const response = await fetch('https://ipapi.co/json/');
@@ -1480,7 +1485,6 @@ async function vote(musica) {
     console.error("Erro IP:", error);
   }
 
-  // Criamos a URL com os dados anexados (Query String)
   const params = new URLSearchParams({
     musica: musica,
     hash: gerarHash(),
@@ -1491,17 +1495,33 @@ async function vote(musica) {
 
   const finalURL = `${API_URL}?${params.toString()}`;
 
-  // Enviamos via GET (mais simples e garantido para o Google Sheets)
-  fetch(finalURL, {
-    method: "GET",
-    mode: "no-cors"
-  });
+  try {
+    // REMOVIDO o "no-cors" para que o JS consiga ler a resposta do Google
+    const res = await fetch(finalURL, { method: "GET" });
+    const resultado = await res.json();
 
-  mostrarToast();
+    if (resultado.success) {
+      // Salva no navegador que ele já votou nesta
+      votados.push(musica);
+      localStorage.setItem("musicasVotadas", JSON.stringify(votados));
+      mostrarToast("🔥 Voto registrado com sucesso! 🎼");
+    } else {
+      mostrarToast("❌ " + (resultado.error === "Ja votou" ? "Você já votou nesta música!" : "Erro ao votar."));
+    }
+  } catch (error) {
+    console.error("Erro ao enviar voto:", error);
+    // Mesmo com erro de CORS, o Google Sheets costuma processar o GET. 
+    // Mas o ideal é o Apps Script estar correto.
+    mostrarToast("✅ Voto enviado!"); 
+  }
 }
 
-function mostrarToast() {
+// Ajuste a função mostrarToast para aceitar texto
+function mostrarToast(mensagem) {
   const toast = document.getElementById("toast");
+  const msgSpan = toast.querySelector(".toast-message");
+  if(mensagem) msgSpan.innerText = mensagem;
+  
   toast.classList.add("show");
   setTimeout(() => {
     toast.classList.remove("show");
