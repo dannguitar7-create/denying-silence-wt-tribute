@@ -1469,7 +1469,7 @@ async function vote(musica) {
   // 1. Verificar se já votou nesta música nesta sessão (no navegador)
   const votados = JSON.parse(localStorage.getItem("musicasVotadas") || "[]");
   if (votados.includes(musica)) {
-    alert("Você já votou nesta música!");
+    mostrarToast("❌ Você já votou nesta música!");
     return;
   }
 
