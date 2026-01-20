@@ -361,6 +361,69 @@
   .vote-btn {
     display: none !important;
   }
+
+
+/* ===== CSS DE ENCERRAMENTO DA VOTAÇÃO ===== */
+.final-message {
+  margin: 30px auto;
+  padding: 24px;
+  max-width: 900px;
+  text-align: center;
+  color: #ffffff;
+
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 14px;
+
+  box-shadow: 0 0 25px rgba(120, 160, 255, 0.28);
+  backdrop-filter: blur(6px);
+}
+
+.final-message h2 {
+  margin-bottom: 12px;
+  color: #9bbcff;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+.final-message p {
+  line-height: 1.6;
+  font-size: 1.05rem;
+}
+
+.final-message .thanks {
+  margin-top: 12px;
+  font-weight: bold;
+  color: #d6e0ff;
+}
+
+.top-songs {
+  margin-top: 26px;
+}
+
+.top-songs h3 {
+  margin-bottom: 14px;
+  color: #b3c7ff;
+  letter-spacing: 1px;
+}
+
+.top-songs ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.top-songs li {
+  margin: 6px 0;
+  font-size: 1.1rem;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.top-songs li:last-child {
+  border-bottom: none;
+}
+/* ========================================================== */    
     
   </style>
 </head>
@@ -372,7 +435,31 @@
 
   <div class="header-text">
     <div class="title">Novo Setlist</div>
-    <div class="subtitle">Vote nas músicas que você gostaria de ver nos próximos shows</div>
+
+/* ===== MENSAGEM VOTAÇÃO ENCERRADA ===== */    
+<div class="final-message">
+  <h2>Votação encerrada</h2>
+
+  <p>
+    Vamos avaliar com muito carinho não só essas, mas também as demais músicas votadas e em breve retornaremos com um
+    <strong>setlist renovado e dinâmico</strong>.
+  </p>
+
+  <p class="thanks">Obrigado a todos que participaram!</p>
+
+  <div class="top-songs">
+    <h3>Músicas mais votadas</h3>
+    <ul>
+      <li>Angels</li>
+      <li>Our Solemn Hour</li>
+      <li>Raise Your Banner</li>
+      <li>All I Need</li>
+      <li>Frozen</li>
+    </ul>
+  </div>
+</div>
+/* ======================================= */
+    
   </div>
 </header>
 
